@@ -8,9 +8,11 @@ public static class Convertor
 {
     public static long[] Replacement(string str)
     {
-        str = str.Replace("[", ""); // удаляем символы "["
-        str = str.Replace("]", ""); // удаляем символы "]"
-        string[] strArray = str.Split(','); // разделяем строку по запятым
-        return Array.ConvertAll(strArray, long.Parse); // преобразуем каждый элемент строки в число
+        return str
+            .Replace("[", string.Empty)
+            .Replace("]", string.Empty)
+            .Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(long.Parse)
+            .ToArray()
     }
 }
