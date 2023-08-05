@@ -33,7 +33,7 @@ public class UserPhotoEntityDemo
 public class UserPhotoDTO
 {
     public string photoRectangle;
-    private long idPhoto;
+    public long idPhoto;
     public int countMark;
     public double sumMark;
     public double ratingPhoto;
@@ -129,6 +129,7 @@ public class LoadProfile : MonoBehaviour
         aaa = new Texture2D(1, 1);
         aaa.LoadImage(bytes);
         yield return gridGallery.photo[number].GetComponent<RawImage>().texture = aaa;
+        gridGallery.photo[number].GetComponent<DeletePhotoButton>().idPhoto = profile.userPhotos[profile.userPhotos.Count - number - 1].idPhoto;
     }
     private void CircleImage()
     {
