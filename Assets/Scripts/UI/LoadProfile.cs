@@ -74,17 +74,17 @@ public class LoadProfile : MonoBehaviour
     private void OnEnable()
     {
         URL = LoadData.LoadDataName(DataName.url);
+        print(URL);
     }
-    public void LoadMainPanel(LoadYourProfile thisScr, int id)
+    public void LoadMainPanel(LoadYourProfile thisScr, GridGallery gridGall, int id)
     {
-        
+        gridGallery = gridGall;
         idProfile = id;
         StartCoroutine(StartLoadingTexture(thisScr));
     }
     public void ReturnDataProfile()
     {
         profileScr.DataLoad(texturePhoto, ratingRandomPhoto, topRandomPhoto, sub1, sub2, nickNameRandomProfile);
-        print(3);
     }
     private IEnumerator StartLoadingTexture(LoadYourProfile thisScr)
     {
@@ -101,8 +101,10 @@ public class LoadProfile : MonoBehaviour
     }
     private IEnumerator GetProfile(long idProfile)
     {
+        URL = LoadData.LoadDataName(DataName.url);
         a = true;
         string url = URL + $"/dto/{idProfile}";
+        print(url);
         UnityWebRequest request = UnityWebRequest.Get(url);
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)

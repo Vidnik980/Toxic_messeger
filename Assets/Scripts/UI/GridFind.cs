@@ -46,10 +46,12 @@ public class GridFind : MonoBehaviour
             number++;
             transform.GetComponent<RectTransform>().sizeDelta = new Vector2(imageX, distansNextImage);
         }
+        number = 0;
     }
     public void LoadDataProfile(Texture2D image, string name)
     {
         photo[number].GetComponent<SettingPanelTop>().AddData(image, name);
+        number++;
     }
     public void CreatePhoto()
     {

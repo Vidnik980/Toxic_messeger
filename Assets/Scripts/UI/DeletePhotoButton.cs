@@ -6,6 +6,11 @@ public class DeletePhotoButton : MonoBehaviour
 {
     [SerializeField] private GameObject buttonDelete;
     public long idPhoto;
+    private ImageLoad imageLoad;
+    private void Start()
+    {
+        imageLoad = ImageLoad.imageLoad;
+    }
     public void OpenButtonDelete()
     {
         buttonDelete.SetActive(true);
@@ -18,6 +23,6 @@ public class DeletePhotoButton : MonoBehaviour
     }
     public void DeletePhoto()
     {
-
+        imageLoad.StartDeletePhoto((int)idPhoto);
     }
 }

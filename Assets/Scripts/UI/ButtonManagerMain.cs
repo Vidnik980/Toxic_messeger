@@ -8,10 +8,12 @@ public class ButtonManagerMain : MonoBehaviour
     [SerializeField] private GameObject canvas2Top;
     [SerializeField] private GameObject canvas3Reseach;
     [SerializeField] private GameObject canvas4Profile;
+    [SerializeField] private GameObject canvas5SelectProfile;
+    [SerializeField] private LoadYourProfile loadYourProfile;
     private GameObject canvasActive;
     private void Start()
     {
-        canvasActive = canvas1Grade;
+        canvasActive = canvas4Profile;
     }
     public void OpenCanvasGrade()
     {
@@ -28,6 +30,11 @@ public class ButtonManagerMain : MonoBehaviour
     public void OpenCanvasProfile()
     {
         OpenCanvas(canvas4Profile);
+    }
+    public void OpenSelectProfile(int idProfile)
+    {
+        OpenCanvas(canvas5SelectProfile);
+        loadYourProfile.LoadProfile(idProfile);
     }
     private void OpenCanvas(GameObject canvas)
     {

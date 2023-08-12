@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,14 +16,20 @@ public class LoadYourProfile : MonoBehaviour
     private string initialTextRating;
     private string initialTextTop;
     [SerializeField] private LoadProfile loadProfile;
-    private void Start()
+    [SerializeField] private GridGallery gridGallery;
+    public int IdProfile;
+    private void OnEnable()
     {
-        int id = int.Parse(LoadData.LoadDataName(DataName.idProfile));
         initialTextRating = nowRating.text;
         initialTextTop = nowTop.text;
-        print("start rabota");
-        loadProfile.LoadMainPanel(this, id);
-
+    }
+    public void LoadProfile(int id = 0)
+    {
+        if (id == 0)
+            IdProfile = int.Parse(LoadData.LoadDataName(DataName.idProfile));
+        else
+            IdProfile = id;
+        loadProfile.LoadMainPanel(this, gridGallery, IdProfile);
     }
     public void DataLoad(Texture2D texture, double rating, long top, int sub1, int sub2, string nick)
     {

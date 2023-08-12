@@ -17,7 +17,6 @@ public class GridGallery : MonoBehaviour
     public List<RectTransform> photo = new List<RectTransform>();
     public int number;
     public GridGallery gridGallery;
-
     private void Start()
     {
         gridGallery = this;
@@ -34,14 +33,18 @@ public class GridGallery : MonoBehaviour
     }
     public void RemoveImage()
     {
-        number--;
-        Destroy(photo[number].gameObject);
-        photo.RemoveAt(number);
-        distansNextImage -= spaceBeetwinImageY + imageY;
-        transform.GetComponent<RectTransform>().sizeDelta = new Vector2(imageX, distansNextImage);
+        for (int i = number; i > 0; i--)
+        {
+            Destroy(photo[number].gameObject);
+            photo.RemoveAt(number);
+            distansNextImage -= spaceBeetwinImageY + imageY;
+            transform.GetComponent<RectTransform>().sizeDelta = new Vector2(imageX, distansNextImage);
+        }
+        number = 0;
     }
     public void LoadImagefromInternet(int cout)
     {
+        RemoveImage();
         for (int i = 0; i < cout; i++)
         {
             CreatePhoto();

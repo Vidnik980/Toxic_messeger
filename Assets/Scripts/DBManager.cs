@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -13,29 +14,31 @@ public class DBManager : MonoBehaviour
 {
     public string URL;
     public DBManager dbManager;
+    [SerializeField] private TMP_Text consoleLogin;
+    [SerializeField] private TMP_Text consoleRegistration;
     public void Awake()
     {
-        dbManager = this;
-        URL = LoadData.LoadDataName(DataName.url);
-        print(LoadData.LoadDataName(DataName.url));
-        RegistrationData data = new RegistrationData
-        {
-            userName = "vlad",
-            email = "vidnikevich-vlad@mail.ru",
-            password = "1234",
 
-        };
-       // StartCoroutine(PhotoEvaluation());
+        dbManager = this;
+        SaveData.URL(URL);
+        print(LoadData.LoadDataName(DataName.url));
+        Autologin();
+    }
+    private void Autologin()
+    {
+        string userName = LoadData.LoadDataName(DataName.userName);
+        string password = LoadData.LoadDataName(DataName.password);
+        if (userName.Length > 0 && password.Length > 0)
+        {
+            Login(userName, password);
+        }
     }
     public void Register(RegistrationData data)
     {
-        URL = LoadData.LoadDataName(DataName.url);
         StartCoroutine(Registration(data));
-
     }
     public void Login(string userName, string password)
     {
-        URL = LoadData.LoadDataName(DataName.url);
         StartCoroutine(LogIn(userName, password));
         //StartCoroutine(GetID(userName, password));
     }
@@ -52,31 +55,25 @@ public class DBManager : MonoBehaviour
         yield return www;
         if (www.error != null)
         {
-            Debug.Log("Error " + www.error);
+            consoleRegistration.text = "Error " + www.error;
             yield break;
         }
         SaveData.RegistrationData(data);
         SaveData.TokenData(www.text);
-        Debug.Log("Server tolk: " + "Check your email");
+        consoleRegistration.text =  "Server tolk: " + "Check your email";
     }
     private IEnumerator LogIn(string userName, string password)
-    {
-        print(userName);
-        if (userName == null)
-            userName = LoadData.LoadDataName(DataName.userName);
-        if (password == null)
-            password = LoadData.LoadDataName(DataName.password);
-        
+    {        
         string url = URL + $"/api/v1/login?userName={userName}&password={password}";
         print(url);
         UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.Log("Error " + www.error);
+            consoleLogin.text = "Error " + www.error;
             yield break;
         }
-        Debug.Log("Server response: " + www.downloadHandler.text);
+        consoleLogin.text = "Server response: " + www.downloadHandler.text;
         if (www.downloadHandler.text == "Login successful!")
         {
             yield return StartCoroutine(GetID(userName, password));

@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Profiling;
 using UnityEngine.UI;
+using UnityEngine.UIElements.Experimental;
 using UnityEngine.XR;
 using Color = UnityEngine.Color;
 
@@ -50,6 +51,10 @@ public class ImageLoad : MonoBehaviour
     {
         print("rating-" + rating);
         StartCoroutine(PostRating(rating, idPhoto));
+    }
+    public void StartDeletePhoto(int idPhoto)
+    {
+        StartCoroutine(DeletePhoto(idPhoto));
     }
     Texture2D duplicateTexture(Texture2D source) // перезаписывает текстуру с режимом чтения
     {
@@ -322,7 +327,26 @@ public class ImageLoad : MonoBehaviour
         imageRenderer.texture = texture;
         print("end  " + timer);
     }
+    IEnumerator DeletePhoto(int idPhoto)
+    {
+        string url = URL + $"/photo/delete/{idPhoto}";
+        WWWForm form = new WWWForm();
+        form.AddField("id", idPhoto);
 
+        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Photo deleted successfully");
+            }
+            else
+            {
+                Debug.Log("Error deleting photo: " + www.error);
+            }
+        }
+    }
 
 
 
@@ -358,5 +382,6 @@ public class ImageCompressionUtility
 
         return result;
     }
-} // compressedImageBytes - сжатое изображение, полученное с сервера 
+    
+} // compressedImageBytes - сжатое изображение, полученное с сервера /photo/delete/{idPhoto}
 

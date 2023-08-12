@@ -83,6 +83,7 @@ public class LoadRandomProfile : MonoBehaviour
     private IEnumerator GetRandomIDPhoto(int count)
     {
         string url = URL + $"/dto/random/{count}";
+        print(url);
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.downloadHandler = new DownloadHandlerBuffer();
