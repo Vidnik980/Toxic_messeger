@@ -11,6 +11,7 @@ public class ButtonManagerMain : MonoBehaviour
     [SerializeField] private GameObject canvas5SelectProfile;
     [SerializeField] private LoadYourProfile loadYourProfile;
     private GameObject canvasActive;
+    private GameObject lastCanvas;
     private void Start()
     {
         canvasActive = canvas4Profile;
@@ -36,10 +37,15 @@ public class ButtonManagerMain : MonoBehaviour
         OpenCanvas(canvas5SelectProfile);
         loadYourProfile.LoadProfile(idProfile);
     }
+    public void ReturnCanvas()
+    {
+        OpenCanvas(lastCanvas);
+    }
     private void OpenCanvas(GameObject canvas)
     {
         if (canvas != canvasActive)
         {
+            lastCanvas = canvasActive;
             canvas.SetActive(true);
             canvasActive.SetActive(false);
             canvasActive = canvas;

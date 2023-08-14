@@ -51,8 +51,6 @@ public class ProfileUserDTO
 public class LoadProfile : MonoBehaviour
 {
     ProfileUserDTO profile;
-    public RawImage aa;
-    public Texture2D aaa;
     public string URL;
     public int idProfile;
     public Texture2D texturePhoto;
@@ -84,6 +82,7 @@ public class LoadProfile : MonoBehaviour
     }
     public void ReturnDataProfile()
     {
+        print(ratingRandomPhoto);
         profileScr.DataLoad(texturePhoto, ratingRandomPhoto, topRandomPhoto, sub1, sub2, nickNameRandomProfile);
     }
     private IEnumerator StartLoadingTexture(LoadYourProfile thisScr)
@@ -128,9 +127,9 @@ public class LoadProfile : MonoBehaviour
         number1++;
         byte[] bytes = Convert.FromBase64String(profile.userPhotos[profile.userPhotos.Count - number - 1].photoRectangle);
         //byte[] decompressedImageBytes = ImageCompressionUtility.DecompressImage(bytes);
-        aaa = new Texture2D(1, 1);
-        aaa.LoadImage(bytes);
-        yield return gridGallery.photo[number].GetComponent<RawImage>().texture = aaa;
+        Texture2D texture = new Texture2D(1, 1);
+        texture.LoadImage(bytes);
+        yield return gridGallery.photo[number].GetComponent<RawImage>().texture = texture;
         gridGallery.photo[number].GetComponent<DeletePhotoButton>().idPhoto = profile.userPhotos[profile.userPhotos.Count - number - 1].idPhoto;
     }
     private void CircleImage()

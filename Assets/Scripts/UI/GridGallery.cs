@@ -35,8 +35,8 @@ public class GridGallery : MonoBehaviour
     {
         for (int i = number; i > 0; i--)
         {
-            Destroy(photo[number].gameObject);
-            photo.RemoveAt(number);
+            Destroy(photo[0].gameObject);
+            photo.RemoveAt(0);
             distansNextImage -= spaceBeetwinImageY + imageY;
             transform.GetComponent<RectTransform>().sizeDelta = new Vector2(imageX, distansNextImage);
         }
